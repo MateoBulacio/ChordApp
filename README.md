@@ -55,13 +55,6 @@ It's the page where users can register, create a username, password and confirm 
 ### Login.html:
 It's the page where users login. 
 
-
-## Use of AI:
-I used AI for my project mostly for "macro-guideance" purposes, meaning I asked what to start with, what to follow with, what tables I needed in my database for what I wanted to create, etc. I used it mostly for working in an organized way and to have a well-made plan before actually starting to write code. 
-
-In coding, I mostly tried to use my own code and asked AI to help me when it didn't work or asked it why it didn't work. 
-Every moment I used AI, I always made sure to understand what it did so that I can learn instead of just letting it code for me. 
-
 ### AI agents used: 
 - ChatGPT
 - GitHub Copilot
