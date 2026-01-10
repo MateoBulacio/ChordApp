@@ -1,0 +1,29 @@
+<!-- Base page -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Workstation</h1>
+    <h2>{{ song_info.title }} by {{ song_info.artist }}</h2>
+
+    <!-- Hideable editing instruction menu - open by default -->
+    <details open>
+        <summary>Editing Instructions</summary>
+        <div>
+            <p>Enter lyrics broken into verse lines. Add chords in brackets e.g. [C] or [Fmaj7,9,13] above the lyrics, right where they would be played and where you want them to be displayed.</p>
+            <p>Press "Save Version" to save your song/changes.</p>
+        </div>
+    </details>
+    
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <div style="margin-top: 1.5%;">
+        <form method="POST" action="{{ url_for('save_version', song_id=song_info.id) }}">
+            <textarea id="workstation-textarea" name="content" rows="20" placeholder="Enter lyrics" required>{{ content }}</textarea><br>
+            {% if version_number %}
+                <input type="hidden" name="version_number" value="{{ version_number }}">
+            {% endif %}
+            <button class="btn btn-primary" type="submit">Save Version</button>
+        </form>
+    </div>
+{% endblock %}

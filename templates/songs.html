@@ -1,0 +1,45 @@
+<!-- Base page -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Songs List</h1>
+    <a href="{{ url_for('add_song') }}" class="btn btn-primary">Add New Song</a>
+    <br>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr class="clickable">
+                <td>
+                    <a href="{{ url_for('song', song_id=song.id) }}">{{ song.title }}</a>
+                </td>
+                <td>{{ song.artist }}</td>
+                <td>{{ song.genre }}</td>
+            </tr>
+            {% endfor %}
+        </tbody> 
+    </table>
+
+    <script>
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const link = row.querySelector('td a');
+                if (link) window.location.href = link.href;
+            });
+        });
+    </script>
+{% endblock %}

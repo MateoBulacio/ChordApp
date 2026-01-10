@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+{% with messages = get_flashed_messages() %}
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endwith %}
+
+<a type="submit" class="btn btn-primary" href="{{ url_for('song', song_id=song_info.id) }}">Back to Versions</a>
+
+<h1>{{ song_info.title }}</h1>
+<h2>by {{ song_info.artist }}</h2>
+<h6>Version by {{ version.username }} on {{ version.created_at }}</h6>
+<br>
+
+<div class="song">
+    {%- for char in parsed_song -%}
+        {%- if char.type == "chord" -%}
+            <span class="chord">{{ char.value }}</span>
+        {%- elif char.type == "lyric" -%}
+            <span class="lyric">{{ char.value }}</span>
+        {%- elif char.type == "line-break" -%}
+            <br>
+        {%- elif char.type == "spaces" -%}
+            <span class="spaces">{{ char.value }}</span>
+        {%- endif -%}
+    {%- endfor -%}
+</div>
+
+<div id="rate-module">
+    <h5>Song's rating: {{ avg_rating if avg_rating else "No ratings yet" }} </h5>
+
+    <label for="rating"><h6>Rate Version:</h6></label>
+    <table name="rating" id="rating">
+        <tr id="rate-box">
+            <form method="POST" action="{{ url_for('rate_version', song_id=song_info.id, version_id=version.id) }}">
+                {% for i in range(1, 6): %}
+                    <td><button id="rating-buttons" name="rating" type="submit" class="btn btn-primary" value="{{ i }}">{{ i }}</button></td>
+                {% endfor %}
+            </form>
+        </tr>
+    </table>
+</div>
+
+{% if user == version.creator_id %}
+    <a type="submit" class="btn btn-primary" href="{{ url_for('workstation', song_id=song_info.id, version_number=version.version_number) }}">Edit Song</a>
+{% endif %}
+    
+
+
+{% endblock %}
+

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Search results for "{{ query }}"</h1>
+    {% if results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in results %}
+                <tr class="clickable">
+                    <td><a href="{{ url_for('song', song_id=song.id) }}">{{ song.title }}</a>
+                    <td>{{ song.artist }}</td> 
+                    <td>{{ song.genre }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <br>
+        <h4>No results found.</h4>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('add_song') }}">Add this song</a>
+    {% endif %}
+
+    <script>
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const link = row.querySelector('td a');
+                if (link) window.location.href = link.href;
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- Base page -->
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>{{ song_info.title }}</h1>
+    <h2>by {{ song_info.artist }}</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+    {% if versions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Rating</th>
+                    <th>Created by</th>
+                    <th>Date</th>
+                    <th class="edit-delete"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for version in versions %}
+                    <tr class="clickable">
+                        <td><a href="{{ url_for('version', song_id=song_info.id, version_id=version.id) }}">Version {{ version.version_number }} </a></td>
+                        <td>{{ version.avg }}</td>
+                        <td>{{ version.username }}</td> 
+                        <td>{{ version.created_at }}</td>
+                            {% if user == version.creator_id %}
+                                <td class="edit-delete" id="button-container">
+                                    <a type="submit" class="btn btn-primary version-btn" href="{{ url_for('workstation', song_id=song_info.id, version_number=version.version_number) }}">Edit</a>
+                                    <form method="POST" action="{{ url_for('delete_version', song_id=song_info.id, version_id=version.id) }}">
+                                        <button type="submit" class="btn btn-danger version-btn">Delete</button>
+                                    </form>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        <br>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('workstation', song_id=song_info.id) }}">Create New Version</a>
+    {% else %}
+        <br>
+        <h4>Song has no versions yet</h4>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('workstation', song_id=song_info.id) }}">Create First Version</a>
+    {% endif %}
+    <script>
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const link = row.querySelector('td a');
+                if (link) window.location.href = link.href;
+            });
+        });
+    </script>
+{% endblock %}

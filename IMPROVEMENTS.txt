@@ -1,0 +1,24 @@
+1. Ask chatGPT for better words to instruct user on app usage in workstation.html. DONE
+2. chatGPT says I need to fix query logic in add_song route, specifically in the IS NOT NULL element of the query. Code works for now without changes. 
+Keep in mind in case it starts giving trouble.
+3. Generate as many railguards as possible in parsing function; what happens if user forgets to close chord bracket (detect if there's a space and act upon that),
+what happens if user uses 2 spaces in between two words of the lyrics, etc. FOR FUTURE IMPROVEMENTS.
+4. Have confirmation alert for deleting a song. 
+5. Regarding visuals, in version.html page, the rating buttons are a little shifted to the right. Align them to rest of titles. 
+
+CHECKPOINT:
+- Everything regarding registration and auth works. 
+- Everything regarding song creation, edition and revision (seeing the right contents) works. Versions have independent numbers in each song, but globally and 
+under the hood, they have a UNIQUE id. 
+- Chord parsing system. 
+- Rating system complete. 
+
+Next:
+
+
+
+In base version, Hompage redirects to songs. When future improvements are made, Homepage will have enough elements to be displayed. 
+
+After base version:
+1. History feature.
+2. Favorites feature. 

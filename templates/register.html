@@ -1,0 +1,40 @@
+<!-- Base page -->
+{% extends "layout.html" %}
+
+{% block title %}Register - My Website{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <div class="form-containers">
+        <form action="/register" method="post">
+            <h1>Register</h1>
+            <input class="logreg-item" id="usrnm" autocomplete="off" autofocus name="username" placeholder="Username" type="text" required>
+            <input class="logreg-item" id="pwrd" autocomplete="off" name="password" placeholder="Password" type="password" required>
+            <input class="logreg-item" id="cnfrm" autocomplete="off" name="confirmation" placeholder="Confirmation" type="password" required>
+            <button class="logreg-item btn btn-primary" type="submit">Register</button>
+        </form>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', async function(event) {
+            // Prevent form from submitting immediately
+            event.preventDefault();
+
+            // Store information from form into variables
+            let password = document.querySelector('#pwrd').value;
+            let confirmation = document.querySelector('#cnfrm').value;
+
+            // Client-side password-confirmation validation
+            if (password !== confirmation) {
+                alert('Password and confirmation must be identical. Please try again.');
+                return;
+            }
+            else {
+                event.target.submit();
+            }
+        });
+    </script>
+
+{% endblock %}
