@@ -51,7 +51,7 @@ def parse_content(content):
 
     parsed_song = []
     cursor = 0
-    for c in content: #This should cause a conflict
+    for c in content:
         if c == " ":
             # Count consecutive spaces
             space_count = 0
