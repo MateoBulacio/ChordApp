@@ -14,9 +14,11 @@
         </div>
     </details>
     
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
     <div style="margin-top: 1.5%;">
         <form method="POST" action="{{ url_for('save_version', song_id=song_info.id) }}">
             <textarea id="workstation-textarea" name="content" rows="20" placeholder="Enter lyrics" required>{{ content }}</textarea><br>

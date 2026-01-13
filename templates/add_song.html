@@ -4,9 +4,11 @@
 {% block content %}
     <div class="form-containers">
         <h1>Add a New Song</h1>
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
         <form method="POST" action="{{ url_for('add_song')}}">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>

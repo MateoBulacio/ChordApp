@@ -51,26 +51,27 @@ def parse_content(content):
 
     parsed_song = []
     cursor = 0
-    for c in content: #This should cause a conflict
-        if c == " ":
+    while cursor < len(content):
+        if content[cursor] == " ":
             # Count consecutive spaces
             space_count = 0
             while cursor < len(content) and content[cursor] == " ":
                 space_count += 1
                 cursor += 1
             parsed_song.append({"type": "spaces", "value": " " * space_count})
-        elif c == "[":
+        elif content[cursor] == "[":
             # Extract chord
             chord = ""
-            cursor += 1
+            cursor += 1  # Skip opening bracket
             while cursor < len(content) and content[cursor] != "]":
                 chord += content[cursor]
                 cursor += 1
             parsed_song.append({"type": "spaces", "value": " "})
             parsed_song.append({"type": "chord", "value": chord})
             parsed_song.append({"type": "spaces", "value": " "})
-            cursor += 1  # Skip the closing bracket
-        elif c == "\n":
+            if cursor < len(content):  # Skip closing bracket if it exists
+                cursor += 1
+        elif content[cursor] == "\n":
             parsed_song.append({"type": "line-break", "value": "\n"})
             cursor += 1
         else:
