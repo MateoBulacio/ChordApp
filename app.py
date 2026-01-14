@@ -5,6 +5,7 @@
 from cs50 import SQL
 from flask import Flask, abort, render_template, request, redirect, url_for, session, g, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 from helpers import login_required, parse_content
 
@@ -21,7 +22,9 @@ MAX_SEARCH_QUERY_LENGTH = 100
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev-secret-key'
 
-db = SQL("sqlite:///chordapp.db")
+# db = SQL("sqlite:///chordapp.db")
+DB_PATH = os.getenv("DB_PATH", "chordapp.db")
+db = SQL(f"sqlite:///{DB_PATH}")
 
 @app.route("/")
 @login_required
@@ -410,4 +413,6 @@ def rate_version(version_id):
 
 if __name__ == "__main__":
     print("Starting Flask Server...")
-    app.run(debug=True)
+    debug = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+    port = int(os.getenv("FLASK_PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=debug)
